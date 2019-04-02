@@ -107,4 +107,4 @@ typings/
 
 # End of https://www.gitignore.io/api/visualstudiocode
 
-.config.js
+config.js
