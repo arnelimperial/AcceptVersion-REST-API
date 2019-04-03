@@ -3,19 +3,23 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
 const timestamps = require('mongoose-timestamp');
 
-//var joigoose = require('joigoose')(mongoose);
 
 const RegisterSchema = new Schema({
    username: { type: String, match:[/^[a-zA-Z0-9]+$/], unique:true}, 
    email: String,
    password: String
 });
+
+
   
-//var userSchema = new mongoose.Schema(joigoose.convert(joiSchema));
+
+//V1
 RegisterSchema.plugin(timestamps);
 mongoose.model('User1', RegisterSchema);
 const User1 = mongoose.model('User1', RegisterSchema);
 module.exports = User1;
+
+
 
 
 
