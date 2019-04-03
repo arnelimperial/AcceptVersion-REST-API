@@ -26,6 +26,7 @@
     "semver": "^6.0.0"
   },
   "devDependencies": {
+    "@types/dotenv": "^6.1.1",
     "nodemon": "^1.18.10"
   }
 }

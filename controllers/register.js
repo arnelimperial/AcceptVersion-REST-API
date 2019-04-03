@@ -3,7 +3,8 @@ const User2 = require('../models/Register2');
 const bcrypt = require('bcryptjs');
 const errors = require('restify-errors');
 const Joi = require('joi');
-
+const config = require('../config');
+require('dotenv').config();
 
 //Joi Schema
 const registrant = Joi.object().keys({
@@ -23,10 +24,12 @@ const registrant2 = Joi.object().keys({
 
 /**********************************/
 
-
-
 exports.registerV1 = async (req, res, next) => {
     var { email, password, username} = req.body;
+    const user = new User1({
+        username, email, password
+    });
+  
    
     const data = req.body;
     const dataCompare = (Joi.validate(data, registrant).error === null);
@@ -37,17 +40,13 @@ exports.registerV1 = async (req, res, next) => {
         return next();
         
     }else{
-        
-        const user = new User1({
-            username, email, password
-        });
         const userPresent = await User1.findOne({ 'email': dataCompare1.value.email })
         if (userPresent) {
-            res.send({ Error: 'Email is already in use.'});
-            return next();
+            //res.send({ Error: 'Email is already in use.'});
+            return next(new errors.InvalidContentError('Email is already in used.'));
         }else{
 
-        bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.genSalt(10, (_err, salt) => {
             bcrypt.hash(user.password, salt, async (err, hash) => {
             // Hash Password
             user.password = hash;
@@ -65,10 +64,16 @@ exports.registerV1 = async (req, res, next) => {
 
    }}};
 
+
+
+    
+
+
+
 /*******************************************************************V2*/
 
    exports.registerV2 = async (req, res, next) => {
-    var { email, password, username, confirmPassword} = req.body;
+    var { email, password, username} = req.body;
    
     const data2 = req.body;
     const dataCompare2 = (Joi.validate(data2, registrant2).error === null);
@@ -95,7 +100,6 @@ exports.registerV1 = async (req, res, next) => {
             user2.password = hash;
             // Save User
             try {
-                const newUser2 = await user2.save();
                 res.send(201);
                 next();
             } catch (err) {

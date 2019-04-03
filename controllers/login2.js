@@ -2,9 +2,8 @@ const bcrypt = require('bcryptjs');
 const errors = require('restify-errors');
 const jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
-const User1 = require('../models/Register');
 const User2 = require('../models/Register2');
-const auth = require('../middleware/auth');
+const auth = require('../middleware/auth2');
 const config = require('../config');
 require('dotenv/config');
 
@@ -13,7 +12,7 @@ exports.login = async (req, res, next) => {
 
     try {
       // Authenticate User
-      var user = await auth.authenticate(email, password);
+      var user = await auth.authenticate2(email, password);
 
       // Create JWT
       var token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {

@@ -10,16 +10,16 @@ require('restify').plugins;
 
 const server = restify.createServer();
 
-server.pre(restify.plugins.pre.userAgentConnection());
+//server.pre(restify.plugins.pre.userAgentConnection());
 // server.pre(function (request, response, next) {
 //   request.log.info({ req: request }, 'REQUEST');
 //   next();
 // });
 
-// server.pre(function (request, response, next) {
-//   request.log.info({ req: request }, 'REQUEST');
-//   next();
-// });
+server.pre(function (request, response, next) {
+  request.log.info({ req: request }, 'REQUEST');
+  next();
+});
 
 // Middleware
 server.use(restify.plugins.bodyParser());
@@ -34,7 +34,7 @@ server.use(restify.plugins.queryParser());
 //CORS
 const cors = corsMiddleware({
   preflightMaxAge: 5,
-  origins: ['http://localhost:8080', 'https://*.herokuapp.com'],
+  origins: [process.env.URL, 'https://*.herokuapp.com'],
   allowHeaders: ['Authorization'],
   exposeHeaders: ['Authorization']
 
@@ -42,13 +42,15 @@ const cors = corsMiddleware({
 server.pre(cors.preflight);
 server.use(cors.actual);
 
-server.listen(config.PORT, () => {
-  mongoose.set('useFindAndModify', false);
+server.listen(process.env.PORT, () => {
+  mongoose.set('useCreateIndex', true);
   mongoose.connect(
-    config.MONGODB_URI,
+    process.env.MONGODB_URI,
     { useNewUrlParser: true }
   );
 });
+
+
   
 
 const db = mongoose.connection;
