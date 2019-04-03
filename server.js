@@ -32,15 +32,29 @@ server.use(restify.plugins.bodyParser());
 server.use(restify.plugins.queryParser());
 
 //CORS
-const cors = corsMiddleware({
-  preflightMaxAge: 5,
-  origins: [process.env.URL, 'https://*.herokuapp.com'],
-  allowHeaders: ['Authorization'],
-  exposeHeaders: ['Authorization']
+// const cors = corsMiddleware({
+//   preflightMaxAge: 5,
+//   origins: [process.env.URL, 'https://*.herokuapp.com'],
+//   allowHeaders: ['Authorization'],
+//   exposeHeaders: ['Authorization']
 
+// });
+// server.pre(cors.preflight);
+// server.use(cors.actual);
+server.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://*.herokuapp.com');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
+  if(req.method === 'OPTIONS'){
+    res.header('Access-Control-Allow-Methods', '*');
+    return res.send(200);
+  }
+
+  next();
 });
-server.pre(cors.preflight);
-server.use(cors.actual);
+
+
+
 
 server.listen(process.env.PORT, () => {
   mongoose.set('useCreateIndex', true);
