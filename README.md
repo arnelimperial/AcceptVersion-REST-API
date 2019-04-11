@@ -1,6 +1,6 @@
 # Custom header versioning instance in REST API
 
-REST API with users registration and login features versioning using Accept-header. Other functionalities include encryption of password, error-handling, and authentication using JWT. In partial fulfillment of the requirements for the subject [Mastering the Fundamentals of RESTful API Design of Metropolia Open UAS](http://opendata.metropolia.fi/koulutushaku/search.php#result-87398).
+REST API with users registration and login features versioning using custom header Accept-version. Other functionalities include encryption of password, error-handling, and authentication using JWT. In partial fulfillment of the requirements for the subject [Mastering the Fundamentals of RESTful API Design of Metropolia Open UAS](http://opendata.metropolia.fi/koulutushaku/search.php#result-87398).
 
 ***1.0.0***
 
