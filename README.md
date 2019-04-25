@@ -49,6 +49,10 @@ https://api-data-47.herokuapp.com/
 
 ---
 
+
+#### License
+zlib
+
 ### Coded by
 
 [Arnel Imperial](https://arnelimperial.bitbucket.io/)
